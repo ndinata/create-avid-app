@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "expo/tsconfig.base",
+    "@tsconfig/react-native/tsconfig",
+    "@tsconfig/strictest/tsconfig"
+  ],
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "useUnknownInCatchVariables": false,
+
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
+  "exclude": ["ios/", "android/"]
+}
