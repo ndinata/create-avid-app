@@ -3,9 +3,9 @@
 // in the form of _functions returning React Elements_, rather than _Components_.
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import React from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import { useColorScheme } from "@/components/useColorScheme";
@@ -36,23 +36,6 @@ export default function TabLayout() {
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? "light"].text}
-                    style={[
-                      styles.headerInfoIcon,
-                      { opacity: pressed ? 0.5 : 1 },
-                    ]}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
         }}
       />
       <Tabs.Screen
@@ -67,9 +50,6 @@ export default function TabLayout() {
 }
 
 const styles = StyleSheet.create({
-  headerInfoIcon: {
-    marginRight: 15,
-  },
   tabBarIcon: {
     marginBottom: -3,
   },

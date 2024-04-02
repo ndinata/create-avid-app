@@ -1,8 +1,12 @@
 import { Button, StyleSheet, Text, View } from "react-native";
 
+import { useAuth } from "@/auth/ctx";
+
 export default function ProfileScreen() {
+  const { logout } = useAuth();
+
   const onLogout = () => {
-    // TODO: allow logging out
+    logout();
   };
 
   return (
