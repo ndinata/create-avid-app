@@ -20,6 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ["**/*"],
   ios: {
+    bundleIdentifier: "com.anonymous.navy",
     supportsTablet: true,
   },
   android: {
