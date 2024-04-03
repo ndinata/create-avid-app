@@ -5,8 +5,8 @@ import { useAuth } from "@/auth/ctx";
 export default function ProfileScreen() {
   const { logout } = useAuth();
 
-  const onLogout = () => {
-    logout();
+  const onLogout = async () => {
+    await logout();
   };
 
   return (

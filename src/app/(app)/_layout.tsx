@@ -1,7 +1,7 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 import { useAuth } from "@/auth/ctx";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
@@ -9,7 +9,11 @@ import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
 
 export default function AppLayout() {
-  const { session } = useAuth();
+  const { session, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
 
   if (!session) {
     return <Redirect href="/login" />;

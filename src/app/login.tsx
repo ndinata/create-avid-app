@@ -7,8 +7,8 @@ import { useAuth } from "@/auth/ctx";
 export default function LoginScreen() {
   const { login } = useAuth();
 
-  const onLogin = () => {
-    login();
+  const onLogin = async () => {
+    await login();
     router.replace("/");
   };
 

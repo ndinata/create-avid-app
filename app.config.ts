@@ -30,7 +30,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     output: "static",
     favicon: "./src/assets/images/favicon.png",
   },
-  plugins: ["expo-router"],
+  plugins: ["expo-router", "expo-secure-store"],
   experiments: {
     typedRoutes: true,
   },

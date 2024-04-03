@@ -1,10 +1,13 @@
 import * as React from "react";
 
+import { useStorageState } from "@/storage";
+
 type AuthSession = string | null;
 type Ctx = {
   session: AuthSession;
-  login: () => void;
-  logout: () => void;
+  isLoading: boolean;
+  login: () => Promise<void>;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = React.createContext<Ctx | null>(null);
@@ -18,18 +21,19 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }: React.PropsWithChildren) {
-  const [session, setSession] = React.useState<AuthSession>(null);
+  // const [session, setSession] = React.useState<AuthSession>(null);
+  const [[isLoading, session], setSession] = useStorageState("session");
 
-  const login = () => {
-    setSession("some-logged-in-session");
+  const login = async () => {
+    await setSession("some-logged-in-session");
   };
 
-  const logout = () => {
-    setSession(null);
+  const logout = async () => {
+    await setSession(null);
   };
 
   return (
-    <AuthContext.Provider value={{ session, login, logout }}>
+    <AuthContext.Provider value={{ session, isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
