@@ -21,18 +21,18 @@ export default function HomeScreen() {
       <TouchableOpacity
         onPress={tryGoBack}
         style={{
-          marginVertical: 20,
+          marginVertical: 24,
           backgroundColor: "white",
           borderRadius: 6,
           borderWidth: 1,
           borderColor: "grey",
-          paddingHorizontal: 24,
-          paddingVertical: 16,
+          paddingHorizontal: 32,
+          paddingVertical: 12,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Text style={{ fontSize: 16, textAlign: "center" }}>Go back</Text>
+        <Text style={{ fontSize: 16, textAlign: "center" }}>Back</Text>
       </TouchableOpacity>
     </View>
   );
