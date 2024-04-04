@@ -4,10 +4,11 @@ import { View } from "react-native";
 
 import { useAuth } from "@/auth/ctx";
 import { Button } from "@/components";
-import { tw } from "@/style";
+import { useColourScheme } from "@/theme";
 
 export default function LoginScreen() {
   const { login } = useAuth();
+  const { tw } = useColourScheme();
 
   const onLogin = async () => {
     await login();

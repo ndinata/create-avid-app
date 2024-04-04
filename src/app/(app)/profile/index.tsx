@@ -1,23 +1,36 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 import { useAuth } from "@/auth/ctx";
 import { Button } from "@/components";
-import { tw, useColourScheme } from "@/style";
+import { useColourScheme } from "@/theme";
 
 export default function ProfileScreen() {
   const { logout } = useAuth();
-  const { currentScheme, isDevice, setScheme } = useColourScheme();
+  const { tw, currentScheme, setScheme } = useColourScheme();
 
-  const setLightTheme = () => {
-    setScheme("light");
+  const [isDevice, setIsDevice] = useState(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem("app-colour-scheme").then((value) =>
+      setIsDevice(value === null),
+    );
+  }, []);
+
+  const setLightTheme = async () => {
+    await setScheme("light");
+    setIsDevice(false);
   };
 
-  const setDarkTheme = () => {
-    setScheme("dark");
+  const setDarkTheme = async () => {
+    await setScheme("dark");
+    setIsDevice(false);
   };
 
-  const setDeviceTheme = () => {
-    setScheme("device");
+  const setDeviceTheme = async () => {
+    await setScheme("device");
+    setIsDevice(true);
   };
 
   const onLogout = async () => {
@@ -42,20 +55,20 @@ export default function ProfileScreen() {
         <Button
           title="Set to light"
           onPress={setLightTheme}
-          highlighted={currentScheme === "light" && !isDevice}
+          disabled={currentScheme === "light" && !isDevice}
         />
         <Button
           title="Set to dark"
           onPress={setDarkTheme}
-          highlighted={currentScheme === "dark" && !isDevice}
+          disabled={currentScheme === "dark" && !isDevice}
         />
         <Button
           title="Set to device"
           onPress={setDeviceTheme}
-          highlighted={isDevice}
+          disabled={isDevice}
         />
 
-        <Button title="Log out" onPress={onLogout} />
+        <Button title="Log out" onPress={onLogout} destructive />
       </View>
     </View>
   );

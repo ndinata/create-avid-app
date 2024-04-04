@@ -4,7 +4,7 @@ import React from "react";
 import { StyleSheet, Text } from "react-native";
 
 import { useAuth } from "@/auth/ctx";
-import { useColourScheme } from "@/style";
+import { useColourScheme } from "@/theme";
 
 export default function AppLayout() {
   const { session, isLoading } = useAuth();

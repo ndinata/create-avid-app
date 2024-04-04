@@ -1,5 +1,6 @@
 import type { Theme } from "@react-navigation/native";
 
+/** Default colours for navigation components (tabs, etc.). */
 const DefaultTheme: Readonly<Theme> = Object.freeze({
   dark: false,
   colors: {
@@ -12,6 +13,7 @@ const DefaultTheme: Readonly<Theme> = Object.freeze({
   },
 });
 
+/** Dark theme colours for navigation components (tabs, etc.). */
 const DarkTheme: Readonly<Theme> = Object.freeze({
   dark: true,
   colors: {

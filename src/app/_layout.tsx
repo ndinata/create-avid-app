@@ -2,12 +2,7 @@ import { ThemeProvider } from "@react-navigation/native";
 import { Slot } from "expo-router";
 
 import { AuthProvider } from "@/auth/ctx";
-import {
-  ColourSchemeProvider,
-  NavTheme,
-  useColourScheme,
-  useDeviceContext,
-} from "@/style";
+import { ColourSchemeProvider, NavTheme, useColourScheme } from "@/theme";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -15,8 +10,6 @@ export {
 } from "expo-router";
 
 export default function RootLayout() {
-  useDeviceContext();
-
   return (
     <AuthProvider>
       <ColourSchemeProvider>

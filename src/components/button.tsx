@@ -1,32 +1,40 @@
 import { Text, TouchableOpacity } from "react-native";
 
-import { tw } from "@/style";
+import { tw } from "@/theme";
 
 type Props = {
   title: string;
-  highlighted?: boolean;
+  destructive?: boolean;
+  disabled?: boolean;
   onPress: () => void | Promise<void>;
 };
 
-export function Button({ title, highlighted = false, onPress }: Props) {
+export function Button({
+  title,
+  destructive = false,
+  disabled = false,
+  onPress,
+}: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
+      disabled={disabled}
       style={tw.style(
-        "h-10 flex-row items-center justify-center rounded-md px-5 py-2",
+        "h-10 flex-row items-center justify-center rounded-md bg-primary px-5 py-2 dark:bg-primary-dark",
         {
-          "bg-primary dark:bg-primary-dark": !highlighted,
-          "border border-input bg-background dark:border-input-dark dark:bg-background-dark":
-            highlighted,
+          "bg-destructive dark:bg-destructive-dark": destructive,
+          "bg-secondary dark:bg-secondary-dark": disabled,
         },
       )}
     >
       <Text
         style={tw.style(
-          "font-medium text-foreground dark:text-foreground-dark",
+          "font-medium text-primary-foreground dark:text-primary-foreground-dark",
           {
-            "text-primary-foreground dark:text-primary-foreground-dark":
-              !highlighted,
+            "text-destructive-foreground dark:text-destructive-foreground-dark":
+              destructive,
+            "text-secondary-foreground dark:text-secondary-foreground-dark":
+              disabled,
           },
         )}
       >

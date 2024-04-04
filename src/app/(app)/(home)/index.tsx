@@ -1,29 +1,14 @@
 import { router } from "expo-router";
-import { useState } from "react";
-import { Alert, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import { Button } from "@/components";
-import { tw, useColourScheme } from "@/style";
+import { useColourScheme } from "@/theme";
 
 export default function HomeScreen() {
-  const { currentScheme, isDevice } = useColourScheme();
-
-  const [count, setCount] = useState(0);
+  const { tw } = useColourScheme();
 
   const goToDetails = () => {
     router.push("/home/detail");
-  };
-
-  const tryGoBack = () => {
-    if (router.canGoBack()) {
-      console.error("Should not be able to go back from the tab index");
-      router.back();
-    } else {
-      Alert.alert(
-        "Correct behaviour",
-        "Should not be able to go back from tab index.",
-      );
-    }
   };
 
   return (
@@ -37,22 +22,11 @@ export default function HomeScreen() {
           "text-lg font-bold text-foreground dark:text-foreground-dark",
         )}
       >
-        Count: {count}
+        Home Screen
       </Text>
 
       <View style={tw.style("my-4 w-40 gap-2")}>
-        <Text
-          style={tw.style(
-            "text-center text-foreground dark:text-foreground-dark",
-          )}
-        >
-          Theme: {currentScheme ?? "null"}
-          {isDevice ? " (device)" : ""}
-        </Text>
-
-        <Button title="Increment" onPress={() => setCount((c) => c + 1)} />
-        <Button title="Go to details" onPress={goToDetails} />
-        <Button title="Back" onPress={tryGoBack} />
+        <Button title="Go to Details" onPress={goToDetails} />
       </View>
     </View>
   );
