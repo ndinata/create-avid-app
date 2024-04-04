@@ -5,8 +5,8 @@ import { StyleSheet, Text } from "react-native";
 
 import { useAuth } from "@/auth/ctx";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
-import { useColorScheme } from "@/components/useColorScheme";
 import Colors from "@/constants/Colors";
+import { useColourScheme } from "@/style";
 
 export default function AppLayout() {
   const { session, isLoading } = useAuth();
@@ -23,12 +23,12 @@ export default function AppLayout() {
 }
 
 function TabNav() {
-  const colorScheme = useColorScheme();
+  const { currentScheme } = useColourScheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: Colors[currentScheme ?? "light"].tint,
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),

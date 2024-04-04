@@ -10,7 +10,11 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
 import { AuthProvider } from "@/auth/ctx";
-import { useColorScheme } from "@/components/useColorScheme";
+import {
+  ColourSchemeProvider,
+  useColourScheme,
+  useDeviceContext,
+} from "@/style";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -21,6 +25,8 @@ export {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  useDeviceContext();
+
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
@@ -43,16 +49,18 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <RootLayoutNav />
+      <ColourSchemeProvider>
+        <RootLayoutNav />
+      </ColourSchemeProvider>
     </AuthProvider>
   );
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const { currentScheme } = useColourScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={currentScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Slot />
     </ThemeProvider>
   );

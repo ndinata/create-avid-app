@@ -1,7 +1,15 @@
 import { router } from "expo-router";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { Alert, Text, View } from "react-native";
+
+import { Button } from "@/components";
+import { tw, useColourScheme } from "@/style";
 
 export default function HomeScreen() {
+  const { currentScheme, isDevice } = useColourScheme();
+
+  const [count, setCount] = useState(0);
+
   const goToDetails = () => {
     router.push("/home/detail");
   };
@@ -19,54 +27,33 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Home</Text>
-
-      <TouchableOpacity
-        onPress={goToDetails}
-        style={{
-          marginVertical: 24,
-          backgroundColor: "white",
-          borderRadius: 6,
-          borderWidth: 1,
-          borderColor: "grey",
-          paddingHorizontal: 32,
-          paddingVertical: 12,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+    <View
+      style={tw.style(
+        "flex-1 items-center justify-center bg-background dark:bg-background-dark",
+      )}
+    >
+      <Text
+        style={tw.style(
+          "font-bold text-lg text-foreground dark:text-foreground-dark",
+        )}
       >
-        <Text style={{ fontSize: 16, textAlign: "center" }}>Go to details</Text>
-      </TouchableOpacity>
+        Count: {count}
+      </Text>
 
-      <TouchableOpacity
-        onPress={tryGoBack}
-        style={{
-          backgroundColor: "white",
-          borderRadius: 6,
-          borderWidth: 1,
-          borderColor: "grey",
-          paddingHorizontal: 32,
-          paddingVertical: 12,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={{ fontSize: 16, textAlign: "center" }}>Back</Text>
-      </TouchableOpacity>
+      <View style={tw.style("gap-2 my-4 w-40")}>
+        <Text
+          style={tw.style(
+            "text-center text-foreground dark:text-foreground-dark",
+          )}
+        >
+          Theme: {currentScheme ?? "null"}
+          {isDevice ? " (device)" : ""}
+        </Text>
+
+        <Button title="Increment" onPress={() => setCount((c) => c + 1)} />
+        <Button title="Go to details" onPress={goToDetails} />
+        <Button title="Back" onPress={tryGoBack} />
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-});
