@@ -4,8 +4,6 @@ import React from "react";
 import { StyleSheet, Text } from "react-native";
 
 import { useAuth } from "@/auth/ctx";
-import { useClientOnlyValue } from "@/components/useClientOnlyValue";
-import Colors from "@/constants/Colors";
 import { useColourScheme } from "@/style";
 
 export default function AppLayout() {
@@ -28,16 +26,13 @@ function TabNav() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[currentScheme ?? "light"].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
+        tabBarActiveTintColor: currentScheme === "dark" ? "#fff" : "#2f95dc",
+        headerShown: false,
       }}
     >
       <Tabs.Screen
         name="(home)"
         options={{
-          headerShown: false,
           title: "Home",
           tabBarIcon: ({ color }) => (
             <FontAwesome
@@ -52,7 +47,6 @@ function TabNav() {
       <Tabs.Screen
         name="profile"
         options={{
-          headerShown: false,
           title: "Profile",
           tabBarIcon: ({ color }) => (
             <FontAwesome
