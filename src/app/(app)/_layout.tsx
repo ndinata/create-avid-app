@@ -1,4 +1,4 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { IconHome, IconUserCircle } from "@tabler/icons-react-native";
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
 import { StyleSheet, Text } from "react-native";
@@ -49,25 +49,11 @@ function TabNav() {
 }
 
 function HomeTabIcon({ color }: { color: string }) {
-  return (
-    <FontAwesome
-      size={28}
-      name="home"
-      color={color}
-      style={styles.tabBarIcon}
-    />
-  );
+  return <IconHome color={color} style={styles.tabBarIcon} />;
 }
 
 function ProfileTabIcon({ color }: { color: string }) {
-  return (
-    <FontAwesome
-      size={28}
-      name="gear"
-      color={color}
-      style={styles.tabBarIcon}
-    />
-  );
+  return <IconUserCircle color={color} style={styles.tabBarIcon} />;
 }
 
 const styles = StyleSheet.create({
