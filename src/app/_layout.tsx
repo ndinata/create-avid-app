@@ -1,9 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -12,6 +8,7 @@ import { useEffect } from "react";
 import { AuthProvider } from "@/auth/ctx";
 import {
   ColourSchemeProvider,
+  NavTheme,
   useColourScheme,
   useDeviceContext,
 } from "@/style";
@@ -60,7 +57,9 @@ function RootLayoutNav() {
   const { currentScheme } = useColourScheme();
 
   return (
-    <ThemeProvider value={currentScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider
+      value={currentScheme === "dark" ? NavTheme.dark : NavTheme.default}
+    >
       <Slot />
     </ThemeProvider>
   );

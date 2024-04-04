@@ -26,7 +26,7 @@ function TabNav() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: currentScheme === "dark" ? "#fff" : "#2f95dc",
+        tabBarActiveTintColor: currentScheme === "dark" ? "#F8FAFC" : "#0F172A",
         headerShown: false,
       }}
     >
@@ -34,36 +34,44 @@ function TabNav() {
         name="(home)"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome
-              size={28}
-              name="home"
-              color={color}
-              style={styles.tabBarIcon}
-            />
-          ),
+          tabBarIcon: HomeTabIcon,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome
-              size={28}
-              name="gear"
-              color={color}
-              style={styles.tabBarIcon}
-            />
-          ),
+          tabBarIcon: ProfileTabIcon,
         }}
       />
     </Tabs>
   );
 }
 
+function HomeTabIcon({ color }: { color: string }) {
+  return (
+    <FontAwesome
+      size={28}
+      name="home"
+      color={color}
+      style={styles.tabBarIcon}
+    />
+  );
+}
+
+function ProfileTabIcon({ color }: { color: string }) {
+  return (
+    <FontAwesome
+      size={28}
+      name="gear"
+      color={color}
+      style={styles.tabBarIcon}
+    />
+  );
+}
+
 const styles = StyleSheet.create({
   tabBarIcon: {
-    marginBottom: -3,
+    marginBottom: -4,
   },
 });
