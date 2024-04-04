@@ -34,13 +34,13 @@ export default function HomeScreen() {
     >
       <Text
         style={tw.style(
-          "font-bold text-lg text-foreground dark:text-foreground-dark",
+          "text-lg font-bold text-foreground dark:text-foreground-dark",
         )}
       >
         Count: {count}
       </Text>
 
-      <View style={tw.style("gap-2 my-4 w-40")}>
+      <View style={tw.style("my-4 w-40 gap-2")}>
         <Text
           style={tw.style(
             "text-center text-foreground dark:text-foreground-dark",

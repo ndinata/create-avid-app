@@ -6,7 +6,7 @@ export default function DetailScreen() {
   return (
     <View
       style={tw.style(
-        "items-center justify-center flex-1 bg-background dark:bg-background-dark",
+        "flex-1 items-center justify-center bg-background dark:bg-background-dark",
       )}
     >
       <Text style={tw.style("text-foreground dark:text-foreground-dark")}>

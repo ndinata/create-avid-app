@@ -32,7 +32,7 @@ export default function ProfileScreen() {
     >
       <Text
         style={tw.style(
-          "my-4 font-bold text-lg text-foreground dark:text-foreground-dark",
+          "my-4 text-lg font-bold text-foreground dark:text-foreground-dark",
         )}
       >
         Profile Screen

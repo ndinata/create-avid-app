@@ -13,10 +13,10 @@ export function Button({ title, highlighted = false, onPress }: Props) {
     <TouchableOpacity
       onPress={onPress}
       style={tw.style(
-        "flex-row items-center justify-center rounded-md h-10 px-5 py-2",
+        "h-10 flex-row items-center justify-center rounded-md px-5 py-2",
         {
           "bg-primary dark:bg-primary-dark": !highlighted,
-          "border border-input dark:border-input-dark bg-background dark:bg-background-dark":
+          "border border-input bg-background dark:border-input-dark dark:bg-background-dark":
             highlighted,
         },
       )}
