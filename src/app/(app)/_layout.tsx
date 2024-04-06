@@ -1,10 +1,9 @@
 import { IconHome, IconUserCircle } from "@tabler/icons-react-native";
 import { Redirect, Tabs } from "expo-router";
-import React from "react";
 import { StyleSheet, Text } from "react-native";
 
-import { useAuth } from "@/auth/ctx";
-import { useColourScheme } from "@/theme";
+import { useAuth } from "@/auth";
+import { useColourScheme, useThemeColours } from "@/theme";
 
 export default function AppLayout() {
   const { session, isLoading } = useAuth();
@@ -22,11 +21,15 @@ export default function AppLayout() {
 
 function TabNav() {
   const { currentScheme } = useColourScheme();
+  const [primary, primaryDark] = useThemeColours(currentScheme, [
+    "primary",
+    "primary-dark",
+  ]);
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: currentScheme === "dark" ? "#F8FAFC" : "#0F172A",
+        tabBarActiveTintColor: currentScheme === "dark" ? primaryDark : primary,
         headerShown: false,
       }}
     >

@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import * as React from "react";
 import { View } from "react-native";
 
-import { useAuth } from "@/auth/ctx";
+import { useAuth } from "@/auth";
 import { Button } from "@/components";
 import { useColourScheme } from "@/theme";
 

@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@react-navigation/native";
 import { Slot } from "expo-router";
 
-import { AuthProvider } from "@/auth/ctx";
+import { AuthProvider } from "@/auth";
 import { ColourSchemeProvider, NavTheme, useColourScheme } from "@/theme";
 
 export {

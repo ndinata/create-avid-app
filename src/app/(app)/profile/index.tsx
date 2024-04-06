@@ -1,10 +1,9 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
-import { useAuth } from "@/auth/ctx";
+import { useAuth } from "@/auth";
 import { Button } from "@/components";
-import { useColourScheme } from "@/theme";
+import { isDeviceColourScheme, useColourScheme } from "@/theme";
 
 export default function ProfileScreen() {
   const { logout } = useAuth();
@@ -13,9 +12,7 @@ export default function ProfileScreen() {
   const [isDevice, setIsDevice] = useState(false);
 
   useEffect(() => {
-    AsyncStorage.getItem("app-colour-scheme").then((value) =>
-      setIsDevice(value === null),
-    );
+    isDeviceColourScheme().then((value) => value && setIsDevice(true));
   }, []);
 
   const setLightTheme = async () => {
