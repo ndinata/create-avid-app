@@ -1,16 +1,12 @@
 import { IconHome, IconUserCircle } from "@tabler/icons-react-native";
 import { Redirect, Tabs } from "expo-router";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { useAuth } from "@/auth";
 import { useColourScheme, useThemeColours } from "@/theme";
 
 export default function AppLayout() {
-  const { session, isLoading } = useAuth();
-
-  if (isLoading) {
-    return <Text>Loading...</Text>;
-  }
+  const { session } = useAuth();
 
   if (!session) {
     return <Redirect href="/login" />;
