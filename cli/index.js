@@ -1,18 +1,23 @@
 #!/usr/bin/env node
+import { consola } from "consola";
 
-createAvidApp();
+import { cloneTemplate, setupProject } from "./setup.js";
 
-function createAvidApp() {
+(async () => {
   const projectName = process.argv[2];
 
-  console.log("create-avid-app.\n");
+  consola.box(`create-avid-app\nv${process.env.npm_package_version}`);
 
   if (!projectName) {
-    console.error("error: missing project name\n");
-    console.error("Please provide a name for your project:");
-    console.error("npx create-avid-app <project_name>");
+    consola.error(
+      "Missing project name. Please provide one:\n\n  npx create-avid-app <project_name>",
+    );
     process.exit(1);
   }
 
-  console.log(`project name: ${projectName}`);
-}
+  consola.info(`Project name: ${projectName}`);
+
+  await cloneTemplate(projectName);
+
+  await setupProject(projectName);
+})();

@@ -4,6 +4,7 @@
   "description": "cli for the Avid Expo starter template",
   "main": "index.js",
   "bin": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node ."
   },
@@ -21,5 +22,8 @@
     "template",
     "boilerplate",
     "expo-router"
-  ]
+  ],
+  "dependencies": {
+    "consola": "^3.2.3"
+  }
 }
