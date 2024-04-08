@@ -1,6 +1,6 @@
 # create-avid-app
 
-This is a CLI for quickly initialising a new Expo project using the [Avid Expo starter template](https://github.com/avid-sh/create-expo).
+This is the CLI for quickly initialising a new Expo project using the [Avid Expo starter template](https://github.com/avid-sh/create-expo).
 
 ## Usage
 

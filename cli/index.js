@@ -6,7 +6,7 @@ import { cloneTemplate, setupProject } from "./setup.js";
 (async () => {
   const projectName = process.argv[2];
 
-  consola.box(`create-avid-app\nv${process.env.npm_package_version}`);
+  consola.box(`create-avid-app`);
 
   if (!projectName) {
     consola.error(

@@ -1,6 +1,6 @@
 {
   "name": "create-avid-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "cli for the Avid Expo starter template",
   "main": "index.js",
   "bin": "index.js",
