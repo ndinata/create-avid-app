@@ -17,15 +17,12 @@ export default function AppLayout() {
 
 function TabNav() {
   const { currentScheme } = useColourScheme();
-  const [primary, primaryDark] = useThemeColours(currentScheme, [
-    "primary",
-    "primary-dark",
-  ]);
+  const [primary] = useThemeColours(currentScheme, ["primary"]);
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: currentScheme === "dark" ? primaryDark : primary,
+        tabBarActiveTintColor: primary,
         headerShown: false,
       }}
     >
