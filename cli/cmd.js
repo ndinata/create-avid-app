@@ -3,10 +3,10 @@ import { exec } from "child_process";
 import { consola } from "consola";
 
 export async function runCommand(cmd, { loading, success, error }) {
-  consola.start(loading);
+  !!loading && consola.start(loading);
   try {
     await execCommand(cmd);
-    consola.success(success);
+    !!success && consola.success(success);
   } catch (err) {
     consola.error(`${error}\n${err}`);
     process.exit(1);

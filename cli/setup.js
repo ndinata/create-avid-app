@@ -1,3 +1,6 @@
+import { readFile, rm, writeFile } from "node:fs/promises";
+import path from "path";
+
 import { consola } from "consola";
 
 import { runCommand } from "./cmd.js";
@@ -12,18 +15,90 @@ export async function cloneTemplate(projectName) {
   const repo = await (await fetch(TEMPLATE_RELEASE_URL)).json();
   const latestRelease = repo.tag_name || "main";
 
-  consola.info(`Using starter template at ${latestRelease}`);
+  consola.ready(`Using starter template at ${latestRelease}\n`);
 
   await runCommand(
     `git clone -b ${latestRelease} --depth=1 ${TEMPLATE_URL} ${projectName}`,
     {
-      loading: "Extracting starter template...",
-      success: "Starter template extracted!",
-      error: "Failed to extract starter template.",
+      loading: "Cloning starter template...",
+      success: "Starter template cloned!\n",
+      error: "Failed to clone starter template.",
     },
   );
 }
 
 export async function setupProject(projectName) {
-  // TODO
+  await removeFiles(projectName);
+  await initRepo(projectName);
+  await updateConfig(projectName);
+  await installDeps(projectName);
+}
+
+async function removeFiles(projectName) {
+  try {
+    return Promise.all(
+      [".git", "cli"].map((name) =>
+        rm(path.join(process.cwd(), `${projectName}/${name}`), {
+          recursive: true,
+        }),
+      ),
+    );
+  } catch (err) {
+    consola.error(`Failed to remove unneeded files from the template.\n${err}`);
+    process.exit(1);
+  }
+}
+
+async function initRepo(projectName) {
+  await runCommand(`cd ${projectName} && git init && cd ..`, {
+    error: "Failed to init project git repo.",
+  });
+}
+
+async function updateConfig(projectName) {
+  // Update `name` field in `package.json`
+  try {
+    const projectPackageJsonPath = path.join(
+      process.cwd(),
+      `${projectName}/package.json`,
+    );
+
+    const projectPackageJson = JSON.parse(
+      await readFile(projectPackageJsonPath, {
+        encoding: "utf8",
+      }),
+    );
+    projectPackageJson.name = projectName.toLowerCase();
+
+    await writeFile(
+      projectPackageJsonPath,
+      JSON.stringify(projectPackageJson, null, 2),
+      "utf8",
+    );
+  } catch (err) {
+    consola.error(`Failed to update project "package.json".\n${err}`);
+    process.exit(1);
+  }
+
+  // Update project name and slug in `app.config.ts`
+  try {
+    const projectAppConfigPath = path.join(
+      process.cwd(),
+      `${projectName}/app.config.ts`,
+    );
+    const contents = await readFile(projectAppConfigPath, { encoding: "utf8" });
+    const replaced = contents.replace(/navy/g, projectName);
+    await writeFile(projectAppConfigPath, replaced);
+  } catch (err) {
+    consola.error(`Failed to update project "app.config.ts".\n${err}`);
+    process.exit(1);
+  }
+}
+
+async function installDeps(projectName) {
+  await runCommand(`cd ${projectName} && npm install`, {
+    loading: "Installing dependencies...",
+    success: "Dependencies installed!\n",
+    error: "Failed to install dependencies.",
+  });
 }
