@@ -3,7 +3,9 @@
   "version": "0.1.1",
   "description": "cli for the Avid Expo starter template",
   "main": "index.js",
-  "bin": "index.js",
+  "bin": {
+    "create-avid-app": "index.js"
+  },
   "type": "module",
   "scripts": {
     "start": "node ."
