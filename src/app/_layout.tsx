@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@react-navigation/native";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 
 import { AuthProvider, useAuth } from "@/auth";
@@ -43,6 +44,7 @@ function RootLayoutNav() {
       value={currentScheme === "dark" ? NavTheme.dark : NavTheme.default}
     >
       <Slot />
+      <StatusBar style={currentScheme === "dark" ? "light" : "dark"} />
     </ThemeProvider>
   );
 }

@@ -1,9 +1,17 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, useCallback, useContext, useMemo } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Appearance } from "react-native";
-import { create, TailwindFn, useDeviceContext } from "twrnc";
+import { create, useAppColorScheme, useDeviceContext } from "twrnc";
 import type { PropsWithChildren } from "react";
+import type { TailwindFn } from "twrnc";
 
+import { storage } from "@/storage";
 import type { ColourScheme } from "./types";
 
 /**
@@ -13,7 +21,7 @@ import type { ColourScheme } from "./types";
  * Lower-level components (e.g. buttons) meant to be used within screens can import
  * `tw` directly.
  */
-const tw = create(require("../../tailwind.config.js"));
+export const tw = create(require("../../tailwind.config.js"));
 
 /**
  * Hook to convert TW colour classnames into their colour string representations.
@@ -26,7 +34,10 @@ const tw = create(require("../../tailwind.config.js"));
  * const [bgPrimary] = useThemeColours(scheme, ["bg-primary"]);
  * ```
  */
-function useThemeColours(currentScheme: ColourScheme, classNames: string[]) {
+export function useThemeColours(
+  currentScheme: ColourScheme,
+  classNames: string[],
+) {
   return useMemo(
     () =>
       classNames.map((cn) =>
@@ -38,14 +49,13 @@ function useThemeColours(currentScheme: ColourScheme, classNames: string[]) {
 
 /**
  * ---------------------------------------------------------------------------
- * ColourSchemeContext
+ * <ColourSchemeProvider>
  *
- * The colour scheme of the app is stored in AsyncStorage if it's set explicitly
- * by the user ("light" or "dark"). Otherwise, it inherits the scheme from the
- * device/OS preferences.
+ * The value of the app's colour scheme is persisted on disk if it's set explicitly
+ * by the user ("light" or "dark"). Otherwise, it's inherited from the device/OS.
  * ------------------------------------------------------------------------ */
 
-/** The AsyncStorage key for the current app colour scheme. */
+/** The storage key for the current app colour scheme. */
 const COLOUR_SCHEME_STORAGE_KEY = "key-app-colour-scheme";
 
 type ColourSchemeCtx = {
@@ -53,32 +63,52 @@ type ColourSchemeCtx = {
   tw: TailwindFn;
   /** The current scheme of the app ("light" or "dark"). */
   currentScheme: ColourScheme;
-  setScheme: (scheme: ColourScheme | "device") => Promise<void>;
+  /** Whether the current colour scheme is inherited from the device/OS. */
+  isDeviceScheme: boolean;
+  setScheme: (scheme: ColourScheme | "device") => void;
 };
 
 const ColourSchemeContext = createContext<ColourSchemeCtx | null>(null);
 
 /** The provider allowing the use of the `useColourScheme` hook. */
-function ColourSchemeProvider({ children }: PropsWithChildren) {
-  // This hook listens to changes in device context (colour scheme, breakpoints, etc.).
-  // Link: https://github.com/jaredh159/tailwind-react-native-classnames?tab=readme-ov-file#enabling-device-context-prefixes
-  useDeviceContext(tw);
+export function ColourSchemeProvider({ children }: PropsWithChildren) {
+  useDeviceContext(tw, {
+    observeDeviceColorSchemeChanges: false,
+    initialColorScheme: hasSchemeInStorage()
+      ? (storage.getString(COLOUR_SCHEME_STORAGE_KEY)! as "light" | "dark")
+      : "device",
+  });
 
-  const setScheme = useCallback(async (scheme: ColourScheme | "device") => {
-    if (scheme === "device") {
-      await AsyncStorage.removeItem(COLOUR_SCHEME_STORAGE_KEY);
-      Appearance.setColorScheme(null);
+  const [currentScheme, _, _setCurrentScheme] = useAppColorScheme(tw);
+  const [isDevice, _setIsDevice] = useState(() => !hasSchemeInStorage());
+
+  const _nativeScheme = Appearance.getColorScheme();
+
+  // This is so that components using twrnc's colours re-render to use the new
+  // scheme.
+  useEffect(() => {
+    isDevice &&
+      currentScheme !== _nativeScheme &&
+      _setCurrentScheme(_nativeScheme);
+  }, [currentScheme, isDevice, _nativeScheme]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const setScheme = useCallback((newScheme: ColourScheme | "device") => {
+    if (newScheme === "device") {
+      storage.delete(COLOUR_SCHEME_STORAGE_KEY);
+      _setIsDevice(true);
     } else {
-      await AsyncStorage.setItem(COLOUR_SCHEME_STORAGE_KEY, scheme);
-      Appearance.setColorScheme(scheme);
+      storage.set(COLOUR_SCHEME_STORAGE_KEY, newScheme);
+      _setCurrentScheme(newScheme);
+      _setIsDevice(false);
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <ColourSchemeContext.Provider
       value={{
         tw,
-        currentScheme: Appearance.getColorScheme() as ColourScheme,
+        currentScheme: currentScheme as ColourScheme,
+        isDeviceScheme: isDevice,
         setScheme,
       }}
     >
@@ -88,7 +118,7 @@ function ColourSchemeProvider({ children }: PropsWithChildren) {
 }
 
 /** Hook to get and set the app's current colour scheme. */
-function useColourScheme() {
+export function useColourScheme() {
   const ctx = useContext(ColourSchemeContext);
   if (!ctx) {
     throw new Error(
@@ -98,15 +128,7 @@ function useColourScheme() {
   return ctx;
 }
 
-/** Returns whether the current colour scheme is inherited from the device/OS. */
-async function isDeviceColourScheme() {
-  return (await AsyncStorage.getItem(COLOUR_SCHEME_STORAGE_KEY)) === null;
+/** Returns whether a colour scheme value is set in storage. */
+function hasSchemeInStorage(): boolean {
+  return storage.contains(COLOUR_SCHEME_STORAGE_KEY);
 }
-
-export {
-  tw,
-  useThemeColours,
-  ColourSchemeProvider,
-  useColourScheme,
-  isDeviceColourScheme,
-};

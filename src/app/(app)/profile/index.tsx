@@ -1,33 +1,23 @@
-import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 import { useAuth } from "@/auth";
 import { Button } from "@/components";
-import { isDeviceColourScheme, useColourScheme } from "@/theme";
+import { useColourScheme } from "@/theme";
 
 export default function ProfileScreen() {
   const { logout } = useAuth();
-  const { tw, currentScheme, setScheme } = useColourScheme();
+  const { tw, currentScheme, isDeviceScheme, setScheme } = useColourScheme();
 
-  const [isDevice, setIsDevice] = useState(false);
-
-  useEffect(() => {
-    isDeviceColourScheme().then((value) => value && setIsDevice(true));
-  }, []);
-
-  const setLightTheme = async () => {
-    await setScheme("light");
-    setIsDevice(false);
+  const setLightScheme = () => {
+    setScheme("light");
   };
 
-  const setDarkTheme = async () => {
-    await setScheme("dark");
-    setIsDevice(false);
+  const setDarkScheme = () => {
+    setScheme("dark");
   };
 
-  const setDeviceTheme = async () => {
-    await setScheme("device");
-    setIsDevice(true);
+  const setDeviceScheme = () => {
+    setScheme("device");
   };
 
   const onLogout = async () => {
@@ -51,18 +41,18 @@ export default function ProfileScreen() {
       <View style={tw.style("gap-3")}>
         <Button
           title="Set to light"
-          onPress={setLightTheme}
-          disabled={currentScheme === "light" && !isDevice}
+          onPress={setLightScheme}
+          disabled={currentScheme === "light" && !isDeviceScheme}
         />
         <Button
           title="Set to dark"
-          onPress={setDarkTheme}
-          disabled={currentScheme === "dark" && !isDevice}
+          onPress={setDarkScheme}
+          disabled={currentScheme === "dark" && !isDeviceScheme}
         />
         <Button
           title="Set to device"
-          onPress={setDeviceTheme}
-          disabled={isDevice}
+          onPress={setDeviceScheme}
+          disabled={isDeviceScheme}
         />
 
         <Button title="Log out" onPress={onLogout} destructive />
