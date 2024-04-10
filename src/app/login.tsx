@@ -10,8 +10,8 @@ export default function LoginScreen() {
   const { login } = useAuth();
   const { tw } = useColourScheme();
 
-  const onLogin = async () => {
-    await login();
+  const onLogin = () => {
+    login("some-logged-in-auth-token");
     router.replace("/");
   };
 

@@ -20,8 +20,8 @@ export default function ProfileScreen() {
     setScheme("device");
   };
 
-  const onLogout = async () => {
-    await logout();
+  const onLogout = () => {
+    logout();
   };
 
   return (

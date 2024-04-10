@@ -6,9 +6,9 @@ import { useAuth } from "@/auth";
 import { useColourScheme, useThemeColours } from "@/theme";
 
 export default function AppLayout() {
-  const { session } = useAuth();
+  const { isLoggedIn } = useAuth();
 
-  if (!session) {
+  if (!isLoggedIn) {
     return <Redirect href="/login" />;
   }
 

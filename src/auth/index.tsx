@@ -1,13 +1,13 @@
 import * as React from "react";
 
-import { useStorageState } from "./storage";
+import { useStorageString } from "@/storage";
 
-type AuthSession = string | null;
+const AUTH_TOKEN_STORAGE_KEY = "key-app-auth-token";
+
 type AuthCtx = {
-  session: AuthSession;
-  isLoading: boolean;
-  login: () => Promise<void>;
-  logout: () => Promise<void>;
+  isLoggedIn: boolean;
+  login: (authToken: string) => void;
+  logout: () => void;
 };
 
 const AuthContext = React.createContext<AuthCtx | null>(null);
@@ -21,18 +21,18 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }: React.PropsWithChildren) {
-  const [[isLoading, session], setSession] = useStorageState("auth-session");
+  const [token, setToken] = useStorageString(AUTH_TOKEN_STORAGE_KEY);
 
-  const login = async () => {
-    await setSession("some-logged-in-session");
+  const login = (authToken: string) => {
+    setToken(authToken);
   };
 
-  const logout = async () => {
-    await setSession(null);
+  const logout = () => {
+    setToken(undefined);
   };
 
   return (
-    <AuthContext.Provider value={{ session, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn: !!token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

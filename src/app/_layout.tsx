@@ -1,10 +1,9 @@
 import { ThemeProvider } from "@react-navigation/native";
 import { Slot } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
+// import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
 
-import { AuthProvider, useAuth } from "@/auth";
+import { AuthProvider } from "@/auth";
 import { ColourSchemeProvider, NavTheme, useColourScheme } from "@/theme";
 
 export {
@@ -13,7 +12,7 @@ export {
 } from "expo-router";
 
 // Prevent the splash screen from auto-hiding before auth session check is complete.
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   return (
@@ -26,18 +25,7 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const { isLoading } = useAuth();
   const { currentScheme } = useColourScheme();
-
-  useEffect(() => {
-    if (!isLoading) {
-      SplashScreen.hideAsync();
-    }
-  }, [isLoading]);
-
-  if (isLoading) {
-    return null;
-  }
 
   return (
     <ThemeProvider
