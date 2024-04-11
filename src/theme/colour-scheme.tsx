@@ -79,26 +79,39 @@ export function ColourSchemeProvider({ children }: PropsWithChildren) {
       : "device",
   });
 
-  const [currentScheme, _, _setCurrentScheme] = useAppColorScheme(tw);
+  const [twrncScheme, _, _setTwrncScheme] = useAppColorScheme(tw);
   const [isDevice, _setIsDevice] = useState(() => !hasSchemeInStorage());
 
   const _nativeScheme = Appearance.getColorScheme();
 
-  // This is so that components using twrnc's colours re-render to use the new
-  // scheme.
+  // On app startup, if the colour scheme is explicitly set (not inherited from device),
+  // this syncs the native scheme to follow twrnc's one.
   useEffect(() => {
-    isDevice &&
-      currentScheme !== _nativeScheme &&
-      _setCurrentScheme(_nativeScheme);
-  }, [currentScheme, isDevice, _nativeScheme]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (!isDevice && _nativeScheme !== twrncScheme) {
+      Appearance.setColorScheme(twrncScheme);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // If the colour scheme is inherited from the device, whenever the twrnc scheme
+  // is out of sync with the native one, update it and trigger a re-render of all
+  // components using twrnc colours.
+  useEffect(() => {
+    if (isDevice && twrncScheme !== _nativeScheme) {
+      _setTwrncScheme(_nativeScheme);
+    }
+  }, [twrncScheme, isDevice, _nativeScheme]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setScheme = useCallback((newScheme: ColourScheme | "device") => {
     if (newScheme === "device") {
       storage.delete(COLOUR_SCHEME_STORAGE_KEY);
+      Appearance.setColorScheme(null);
+      // No calls to `_setTwrncScheme()` here because `_nativeScheme` will only
+      // be updated in the next render; hence the reliance on the `useEffect` above.
       _setIsDevice(true);
     } else {
       storage.set(COLOUR_SCHEME_STORAGE_KEY, newScheme);
-      _setCurrentScheme(newScheme);
+      Appearance.setColorScheme(newScheme);
+      _setTwrncScheme(newScheme);
       _setIsDevice(false);
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -107,7 +120,7 @@ export function ColourSchemeProvider({ children }: PropsWithChildren) {
     <ColourSchemeContext.Provider
       value={{
         tw,
-        currentScheme: currentScheme as ColourScheme,
+        currentScheme: twrncScheme as ColourScheme,
         isDeviceScheme: isDevice,
         setScheme,
       }}

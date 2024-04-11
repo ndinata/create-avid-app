@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 
 import { useAuth } from "@/auth";
 import { Button } from "@/components";
@@ -21,7 +21,10 @@ export default function ProfileScreen() {
   };
 
   const onLogout = () => {
-    logout();
+    Alert.alert("Are you sure you want to log out?", "", [
+      { text: "Cancel", style: "cancel", isPreferred: true },
+      { text: "Yes, log out", style: "destructive", onPress: logout },
+    ]);
   };
 
   return (
