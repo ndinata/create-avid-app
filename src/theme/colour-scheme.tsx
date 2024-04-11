@@ -56,7 +56,7 @@ export function useThemeColours(
  * ------------------------------------------------------------------------ */
 
 /** The storage key for the current app colour scheme. */
-const COLOUR_SCHEME_STORAGE_KEY = "key-app-colour-scheme";
+const STORAGE_KEY_COLOUR_SCHEME = "key-app-colour-scheme";
 
 type ColourSchemeCtx = {
   /** The configured `tw` instance for styling. */
@@ -75,7 +75,7 @@ export function ColourSchemeProvider({ children }: PropsWithChildren) {
   useDeviceContext(tw, {
     observeDeviceColorSchemeChanges: false,
     initialColorScheme: hasSchemeInStorage()
-      ? (storage.getString(COLOUR_SCHEME_STORAGE_KEY)! as "light" | "dark")
+      ? (storage.getString(STORAGE_KEY_COLOUR_SCHEME)! as "light" | "dark")
       : "device",
   });
 
@@ -103,13 +103,13 @@ export function ColourSchemeProvider({ children }: PropsWithChildren) {
 
   const setScheme = useCallback((newScheme: ColourScheme | "device") => {
     if (newScheme === "device") {
-      storage.delete(COLOUR_SCHEME_STORAGE_KEY);
+      storage.delete(STORAGE_KEY_COLOUR_SCHEME);
       Appearance.setColorScheme(null);
       // No calls to `_setTwrncScheme()` here because `_nativeScheme` will only
       // be updated in the next render; hence the reliance on the `useEffect` above.
       _setIsDevice(true);
     } else {
-      storage.set(COLOUR_SCHEME_STORAGE_KEY, newScheme);
+      storage.set(STORAGE_KEY_COLOUR_SCHEME, newScheme);
       Appearance.setColorScheme(newScheme);
       _setTwrncScheme(newScheme);
       _setIsDevice(false);
@@ -143,5 +143,5 @@ export function useColourScheme() {
 
 /** Returns whether a colour scheme value is set in storage. */
 function hasSchemeInStorage(): boolean {
-  return storage.contains(COLOUR_SCHEME_STORAGE_KEY);
+  return storage.contains(STORAGE_KEY_COLOUR_SCHEME);
 }

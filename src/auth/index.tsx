@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useStorageString } from "@/storage";
 
-const AUTH_TOKEN_STORAGE_KEY = "key-app-auth-token";
+const STORAGE_KEY_AUTH_TOKEN = "key-app-auth-token";
 
 type AuthCtx = {
   isLoggedIn: boolean;
@@ -21,7 +21,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }: React.PropsWithChildren) {
-  const [token, setToken] = useStorageString(AUTH_TOKEN_STORAGE_KEY);
+  const [token, setToken] = useStorageString(STORAGE_KEY_AUTH_TOKEN);
 
   const login = (authToken: string) => {
     setToken(authToken);
