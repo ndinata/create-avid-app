@@ -22,6 +22,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@dev-plugins/react-navigation": "^0.0.6",
     "@dev-plugins/react-query": "^0.0.6",
     "@react-navigation/native": "^6.1.10",
     "@tabler/icons-react-native": "^3.1.0",

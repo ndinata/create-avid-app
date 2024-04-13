@@ -1,5 +1,6 @@
+import { useReactNavigationDevTools } from "@dev-plugins/react-navigation";
 import { ThemeProvider } from "@react-navigation/native";
-import { Slot } from "expo-router";
+import { Slot, useNavigationContainerRef } from "expo-router";
 
 import { ApiProvider } from "@/api";
 import { AuthProvider } from "@/auth";
@@ -11,6 +12,10 @@ export {
 } from "expo-router";
 
 export default function RootLayout() {
+  // https://docs.expo.dev/debugging/devtools-plugins/#react-navigation
+  const navigationRef = useNavigationContainerRef();
+  useReactNavigationDevTools(navigationRef);
+
   return (
     <AuthProvider>
       <ApiProvider>
