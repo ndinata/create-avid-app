@@ -1,6 +1,10 @@
 {
   "root": true,
-  "extends": ["@react-native", "plugin:prettier/recommended"],
+  "extends": [
+    "@react-native",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "plugin:prettier/recommended"
+  ],
   "overrides": [
     {
       "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
