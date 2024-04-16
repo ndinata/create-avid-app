@@ -1,4 +1,9 @@
+// This is to allow importing other TS files.
+import "@swc-node/register";
+
 import { ConfigContext, ExpoConfig } from "expo/config";
+
+import { Env } from "./build-env";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -33,5 +38,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   plugins: ["expo-router"],
   experiments: {
     typedRoutes: true,
+  },
+  extra: {
+    ...Env,
   },
 });
