@@ -10,5 +10,5 @@ export type TwStyle =
   | ImageStyle;
 
 export type WithTwStyle<T> = T extends { style?: any }
-  ? Omit<TemplateStringsArray, "style"> & { style?: TwStyle }
+  ? Omit<T, "style"> & { style?: TwStyle }
   : T;
