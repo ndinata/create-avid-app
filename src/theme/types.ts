@@ -9,6 +9,7 @@ export type TwStyle =
   | TextStyle
   | ImageStyle;
 
+/** Injects `T` with a `style` prop of type `TwStyle`. */
 export type WithTwStyle<T> = T extends { style?: any }
   ? Omit<T, "style"> & { style?: TwStyle }
-  : T;
+  : T & { style?: TwStyle };
