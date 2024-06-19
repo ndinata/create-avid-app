@@ -2,3 +2,5 @@ package.json
 package-lock.json
 expo-env.d.ts
 pnpm-lock.yaml
+
+**/readme.md

@@ -5,9 +5,9 @@ import { consola } from "consola";
 
 import { runCommand } from "./cmd.js";
 
-const TEMPLATE_URL = "https://github.com/avid-sh/create-expo.git";
+const TEMPLATE_URL = "https://github.com/ndinata/create-avid-app.git";
 const TEMPLATE_RELEASE_URL =
-  "https://api.github.com/repos/avid-sh/create-expo/releases/latest";
+  "https://api.github.com/repos/ndinata/create-avid-app/releases/latest";
 
 export async function cloneTemplate(projectName) {
   consola.start("Fetching latest starter template...");
