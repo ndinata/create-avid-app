@@ -6,8 +6,6 @@
   ],
   "compilerOptions": {
     "exactOptionalPropertyTypes": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
     "useUnknownInCatchVariables": false,
 
     "paths": {
