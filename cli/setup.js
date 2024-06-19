@@ -96,7 +96,7 @@ async function updateConfig(projectName) {
 }
 
 async function installDeps(projectName) {
-  await runCommand(`cd ${projectName} && npm install`, {
+  await runCommand(`cd ${projectName} && pnpm install`, {
     loading: "Installing dependencies...",
     success: "Dependencies installed!\n",
     error: "Failed to install dependencies.",

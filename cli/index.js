@@ -21,12 +21,12 @@ import { cloneTemplate, setupProject } from "./setup.js";
 
   await setupProject(projectName);
 
-  consola.box(`Your project is now available 🚀
+  consola.box(`Your project is now available! 🚀
 
 Run instructions for Android:
-$ cd ${projectName} && npm run android
+$ cd ${projectName} && pnpm android
 
 Run instructions for iOS:
-$ cd ${projectName} && npm run ios
+$ cd ${projectName} && pnpm ios
 `);
 })();
