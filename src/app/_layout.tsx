@@ -2,8 +2,8 @@ import { useReactNavigationDevTools } from "@dev-plugins/react-navigation";
 import { ThemeProvider } from "@react-navigation/native";
 import { Slot, useNavigationContainerRef } from "expo-router";
 
-import { ApiProvider } from "@/api";
-import { AuthProvider } from "@/auth";
+import { ApiProvider } from "@/services/api";
+import { AuthProvider } from "@/services/auth";
 import { ColourSchemeProvider, NavTheme, useColourScheme } from "@/ui/theme";
 
 export {

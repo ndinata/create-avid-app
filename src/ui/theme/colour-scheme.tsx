@@ -11,7 +11,7 @@ import { create, useAppColorScheme, useDeviceContext } from "twrnc";
 import type { PropsWithChildren } from "react";
 import type { TailwindFn } from "twrnc";
 
-import { storage } from "@/storage";
+import { storage } from "@/services/storage";
 import type { ColourScheme } from "./types";
 
 /**

@@ -2,7 +2,7 @@ import { IconHome, IconUserCircle } from "@tabler/icons-react-native";
 import { Redirect, Tabs } from "expo-router";
 import { StyleSheet } from "react-native";
 
-import { useAuth } from "@/auth";
+import { useAuth } from "@/services/auth";
 import { useColourScheme, useThemeColours } from "@/ui/theme";
 
 export default function AppLayout() {

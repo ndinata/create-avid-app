@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useStorageString } from "@/storage";
+import { useStorageString } from "@/services/storage";
 
 const STORAGE_KEY_AUTH_TOKEN = "key-app-auth-token";
 
