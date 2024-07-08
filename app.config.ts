@@ -7,12 +7,12 @@ import { Env } from "./build-env";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: "navy",
-  slug: "navy",
+  name: "Avid",
+  slug: "avid-mobile",
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
-  scheme: "navyapp",
+  scheme: "avidapp",
   userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/images/splash.png",
@@ -21,7 +21,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   assetBundlePatterns: ["**/*"],
   ios: {
-    bundleIdentifier: "com.anonymous.navy",
+    bundleIdentifier: "com.anonymous.avid",
     supportsTablet: true,
   },
   android: {

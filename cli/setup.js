@@ -87,7 +87,7 @@ async function updateConfig(projectName) {
       `${projectName}/app.config.ts`,
     );
     const contents = await readFile(projectAppConfigPath, { encoding: "utf8" });
-    const replaced = contents.replace(/navy/g, projectName);
+    const replaced = contents.replace(/avid/gi, projectName);
     await writeFile(projectAppConfigPath, replaced);
   } catch (err) {
     consola.error(`Failed to update project "app.config.ts".\n${err}`);
