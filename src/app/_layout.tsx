@@ -4,7 +4,7 @@ import { Slot, useNavigationContainerRef } from "expo-router";
 
 import { ApiProvider } from "@/api";
 import { AuthProvider } from "@/auth";
-import { ColourSchemeProvider, NavTheme, useColourScheme } from "@/theme";
+import { ColourSchemeProvider, NavTheme, useColourScheme } from "@/ui/theme";
 
 export {
   // Catch any errors thrown by the Layout component.

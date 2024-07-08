@@ -3,8 +3,8 @@ import * as React from "react";
 import { View } from "react-native";
 
 import { useAuth } from "@/auth";
-import { Button } from "@/components";
-import { useColourScheme } from "@/theme";
+import { Button } from "@/ui/components";
+import { useColourScheme } from "@/ui/theme";
 
 export default function LoginScreen() {
   const { login } = useAuth();

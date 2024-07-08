@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 
-import { useColourScheme } from "@/theme";
+import { useColourScheme } from "@/ui/theme";
 
 export default function DetailScreen() {
   const { tw } = useColourScheme();

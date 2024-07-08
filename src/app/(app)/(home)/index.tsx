@@ -1,9 +1,9 @@
 import { router } from "expo-router";
 import { Text, View } from "react-native";
 
-import { Button } from "@/components";
 import { Env } from "@/env";
-import { useColourScheme } from "@/theme";
+import { Button } from "@/ui/components";
+import { useColourScheme } from "@/ui/theme";
 
 export default function HomeScreen() {
   const { tw } = useColourScheme();

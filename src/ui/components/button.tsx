@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity } from "react-native";
 
-import { tw } from "@/theme";
+import { tw } from "@/ui/theme";
 
 type Props = {
   title: string;
