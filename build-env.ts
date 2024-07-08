@@ -28,14 +28,11 @@ import path from "path";
 import dotenv from "dotenv";
 import { z } from "zod";
 
-enum Environment {
-  Dev = "development",
-  Preview = "preview",
-  Prod = "production",
-}
+type Environment = "development" | "preview" | "production";
 
 /** If `APP_ENV` is unspecified, the default is "development". */
-const _APP_ENV = (process.env["APP_ENV"] as Environment) ?? Environment.Dev;
+const _APP_ENV: Environment =
+  (process.env["APP_ENV"] as Environment) ?? "development";
 
 /**
  * --------------------------------------------------------------------------
@@ -48,7 +45,13 @@ const _APP_ENV = (process.env["APP_ENV"] as Environment) ?? Environment.Dev;
 
 const ENV_SCHEMA = z.object({
   /** The environment the app is run in. ("development" | "preview" | "production") */
-  APP_ENV: z.nativeEnum(Environment).default(_APP_ENV),
+  APP_ENV: z
+    .union([
+      z.literal("development"),
+      z.literal("preview"),
+      z.literal("production"),
+    ])
+    .default(_APP_ENV),
 
   GREETING: z.string(),
 });
