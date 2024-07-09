@@ -1,45 +1,83 @@
+import { memo } from "react";
 import { Text, TouchableOpacity } from "react-native";
 
-import { tw } from "@/ui/theme";
+import { createStyleSheet, useStyles } from "@/ui/theme";
+import type { StyleVariant } from "@/ui/theme/types";
 
-type Props = {
-  title: string;
-  destructive?: boolean;
-  disabled?: boolean;
+type Props = StyleVariant<typeof stylesheet> & {
+  label: string;
   onPress: () => void | Promise<void>;
 };
 
-export function Button({
-  title,
-  destructive = false,
-  disabled = false,
-  onPress,
-}: Props) {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      disabled={disabled}
-      style={tw.style(
-        "h-10 flex-row items-center justify-center rounded-md bg-primary px-5 py-2 dark:bg-primary-dark",
-        {
-          "bg-destructive dark:bg-destructive-dark": destructive,
-          "bg-secondary dark:bg-secondary-dark": disabled,
-        },
-      )}
-    >
-      <Text
-        style={tw.style(
-          "font-medium text-primary-foreground dark:text-primary-foreground-dark",
-          {
-            "text-destructive-foreground dark:text-destructive-foreground-dark":
-              destructive,
-            "text-secondary-foreground dark:text-secondary-foreground-dark":
-              disabled,
-          },
-        )}
+export const Button = memo(
+  ({ label, type, disabled = false, onPress }: Props) => {
+    const { styles } = useStyles(stylesheet, {
+      type,
+      disabled,
+    });
+
+    return (
+      <TouchableOpacity
+        onPress={onPress}
+        disabled={disabled as boolean}
+        style={styles.pressable}
       >
-        {title}
-      </Text>
-    </TouchableOpacity>
-  );
-}
+        <Text style={styles.label}>{label}</Text>
+      </TouchableOpacity>
+    );
+  },
+);
+
+const stylesheet = createStyleSheet((theme) => ({
+  pressable: {
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 6,
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    variants: {
+      type: {
+        default: {
+          backgroundColor: theme.colours.primary,
+        },
+        secondary: {
+          backgroundColor: theme.colours.secondary,
+        },
+        destructive: {
+          backgroundColor: theme.colours.destructive,
+        },
+        outline: {
+          borderWidth: 1,
+          borderColor: theme.colours.input,
+          backgroundColor: theme.colours.background,
+        },
+      },
+      disabled: {
+        true: {
+          opacity: 0.5,
+        },
+      },
+    },
+  },
+  label: {
+    fontWeight: "500",
+    variants: {
+      type: {
+        default: {
+          color: theme.colours.primaryForeground,
+        },
+        secondary: {
+          color: theme.colours.secondaryForeground,
+        },
+        destructive: {
+          color: theme.colours.destructiveForeground,
+        },
+        outline: {
+          color: theme.colours.foreground,
+        },
+      },
+      disabled: {},
+    },
+  },
+}));

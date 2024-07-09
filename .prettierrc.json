@@ -1,8 +1,5 @@
 {
-  "plugins": [
-    "@ianvs/prettier-plugin-sort-imports",
-    "prettier-plugin-tailwindcss"
-  ],
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"],
   "importOrder": [
     "<BUILTIN_MODULES>",
     "",
@@ -13,6 +10,5 @@
     "<TYPES>^@/",
     "^[.]",
     "<TYPES>^[.]"
-  ],
-  "tailwindAttributes": ["style"]
+  ]
 }
