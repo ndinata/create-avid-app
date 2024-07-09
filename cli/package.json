@@ -23,7 +23,7 @@
     "expo",
     "template",
     "boilerplate",
-    "expo-router"
+    "react-navigation"
   ],
   "dependencies": {
     "consola": "^3.2.3"
