@@ -10,10 +10,10 @@ Install `pnpm` if you haven't already:
 $ npm install -g pnpm
 ```
 
-Bootstrap your project using the template:
+Then, bootstrap your project using the template:
 
 ```sh
-$ npx create-avid-app@latest <your_project_name>
+$ pnpm create avid-app@latest <your_project_name>
 ```
 
 ## Acknowledgements
