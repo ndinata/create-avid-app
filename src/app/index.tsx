@@ -3,38 +3,35 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from "@react-navigation/native";
-
-import "@/ui/theme/init";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { ApiProvider } from "@/services/api";
-import { useStyles } from "@/ui/theme";
+import { useNavigationTheme } from "@/ui/theme/navigation";
+import { ThemeProvider } from "@/ui/theme/provider";
 import { AppTabNav } from "./layout";
 
 export function App() {
+  return (
+    <ApiProvider>
+      <ThemeProvider>
+        <SafeAreaProvider>
+          <RootNav />
+        </SafeAreaProvider>
+      </ThemeProvider>
+    </ApiProvider>
+  );
+}
+
+function RootNav() {
   // https://docs.expo.dev/debugging/devtools-plugins/#react-navigation
   const navigationRef = useNavigationContainerRef();
   useReactNavigationDevTools(navigationRef);
 
-  const { theme } = useStyles();
+  const navTheme = useNavigationTheme();
 
   return (
-    <ApiProvider>
-      <NavigationContainer
-        ref={navigationRef}
-        theme={{
-          dark: theme.dark,
-          colors: {
-            primary: theme.colours.primary,
-            background: theme.colours.background,
-            text: theme.colours.foreground,
-            border: theme.colours.border,
-            notification: theme.colours.destructive,
-            card: theme.colours.card,
-          },
-        }}
-      >
-        <AppTabNav />
-      </NavigationContainer>
-    </ApiProvider>
+    <NavigationContainer ref={navigationRef} theme={navTheme}>
+      <AppTabNav />
+    </NavigationContainer>
   );
 }

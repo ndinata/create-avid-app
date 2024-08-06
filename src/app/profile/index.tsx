@@ -1,26 +1,13 @@
-import { Text, View } from "react-native";
-
-import { createStyleSheet, useStyles } from "@/ui/theme";
+import { Screen } from "@/ui/components/screen";
+import { Text } from "@/ui/components/text";
+import { useTheme } from "@/ui/theme";
 
 export function ProfileScreen() {
-  const { styles } = useStyles(stylesheet);
+  const { tw } = useTheme();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
-    </View>
+    <Screen contentContainerStyle={tw`items-center justify-center`}>
+      <Text style={tw`text-xl font-medium`}>Profile</Text>
+    </Screen>
   );
 }
-
-const stylesheet = createStyleSheet((theme) => ({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: theme.colours.background,
-    gap: 12,
-  },
-  title: {
-    color: theme.colours.foreground,
-  },
-}));

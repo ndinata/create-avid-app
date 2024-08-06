@@ -1,35 +1,23 @@
-import { Text, View } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-import { Button } from "@/ui/components";
-import { createStyleSheet, useStyles } from "@/ui/theme";
+import { Button } from "@/ui/components/button";
+import { Screen } from "@/ui/components/screen";
+import { Text } from "@/ui/components/text";
+import { useTheme } from "@/ui/theme";
 
 type Props = NativeStackScreenProps<any, any>;
 
 export function HomeScreen({ navigation }: Props) {
-  const { styles } = useStyles(stylesheet);
+  const { tw } = useTheme();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Home</Text>
+    <Screen contentContainerStyle={tw`items-center justify-center`}>
+      <Text style={tw`mb-3 text-xl font-medium`}>Home</Text>
 
       <Button
         label="Go to details"
         onPress={() => navigation.navigate("details")}
       />
-    </View>
+    </Screen>
   );
 }
-
-const stylesheet = createStyleSheet((theme) => ({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: theme.colours.background,
-  },
-  title: {
-    marginBottom: 12,
-    color: theme.colours.foreground,
-  },
-}));
