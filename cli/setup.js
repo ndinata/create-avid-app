@@ -37,7 +37,7 @@ export async function setupProject(projectName) {
 async function removeFiles(projectName) {
   try {
     return Promise.all(
-      [".git", "cli"].map((name) =>
+      [".git", "cli", "license"].map((name) =>
         rm(path.join(process.cwd(), `${projectName}/${name}`), {
           recursive: true,
         }),
