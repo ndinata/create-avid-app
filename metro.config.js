@@ -9,7 +9,7 @@ module.exports = (() => {
 
   config.transformer = {
     ...transformer,
-    babelTransformerPath: require.resolve("react-native-svg-transformer"),
+    babelTransformerPath: require.resolve("react-native-svg-transformer/expo"),
     minifierConfig: {
       compress: {
         // Remove all console logs in production
