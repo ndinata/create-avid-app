@@ -2,6 +2,7 @@
 
 > Yet another template for Expo (React Native) projects!
 
+
 ## Usage
 1. Install [`pnpm`](https://pnpm.io) if you haven't.
 ```sh
@@ -13,6 +14,7 @@ $ npm install -g pnpm
 # will always clone the latest version of the template
 $ pnpm create avid-app@latest <your_project_name>
 ```
+
 
 ## Configuration
 These packages are included out of the box:
@@ -64,58 +66,97 @@ This has several benefits:
 
 Several potential downsides:
 - you now have to be familiar with Tailwind classes if you weren't previously
-- styles can be quite long and ugly (spanning across lines)
 - not every Tailwind class is supported — check out the [library's docs](https://github.com/jaredh159/tailwind-react-native-classnames) for more info
+- styles can be quite long and ugly (spanning across lines)
 
 ### Env management
-
-> [!TIP]
-> TLDR; to add an env variable for development: add it to `.env.development`,
-> add the variable key to the schema in `build-env.ts`, and finally consume it in
-> screens/components by importing `Env` from `@/env`.
 
 Env variables are validated with `zod` at build time to ensure consistent/correct
 values. Unlike [Expo's default mechanism](https://docs.expo.dev/guides/environment-variables/)
 to set and read env variables (which this template doesn't use), the variables
-you want to define don't need to be preprended with `EXPO_PUBLIC` (although you
-should still **assume that they're accessible by your users!**).
+you define don't need to be preprended with `EXPO_PUBLIC` (although you should
+still **assume that they're accessible by your users!**).
 
-#### Defining env variables
-To define env variables, add the key-value pair to any/all of these environment-specific
-files and add the key name to the schema in [`build-env.ts`](#build-envts):
+#### Adding an env variable
+
+1. Add the key-value pair to any/all of these env files:
 - `.env.development`
 - `.env.preview`
 - `.env.production`
 
-To choose which environment to load variables from, set the `APP_ENV` env variable
-to either one of: `development` (default if unspecified) | `preview` | `production`.
-Scripts have also been added to `package.json` to help simplify this for you.
+```sh
+# .env.development
+SOME_ENV_URL="https://yoursite.com"
+```
 
-#### [`build-env.ts`](./build-env.ts)
-This is where you set the schema for your env files. It has detailed comments
-on the expected naming convention of `.env` files and how to use them. This file
-loads env variables and parses them, throwing a build error if the values don't
-match the defined schema. Successfully parsed env variables are then consumed in
-[`app.config.ts`](./app.config.ts) as Expo extra fields, which are then propagated
-by [`src/env.ts`](#srcenvts).
+2. Add the key name to the `zod` schema in [`build-env.ts`](./build-env.ts).
 
-#### [`src/env.ts`](./src/env.ts)
-This file acts only as the proxy for Expo extra fields to improve the type-safety of
-[consuming env variables](#consuming-env-variables-in-screenscomponents). This
-file doesn't need to be modified at all (unless you're changing the mechanism of
-defining and consuming env variables).
+```ts
+// build-env.ts
+const ENV_SCHEMA = z.object({
+  SOME_ENV_URL: z.string(),
 
-#### Consuming env variables in screens/components
-```tsx
+  // your other keys...
+});
+```
+
+This file is where you set the schema of your env variables. It has detailed comments
+explaining what it does—feel free to go through them. During builds, this file loads
+env variables and parses them, throwing a build error if the values don't match the
+defined schema.
+
+3. Import `Env` from `@/env` in your screens/components to consume the env variable.
+
+```ts
 import { Env } from "@/env";
 
 async function getUsers(): Promise<User> {
-  // `BASE_API_URL` will be typechecked if you define it as part of the schema
+  // `SOME_ENV_URL` will be typechecked if you define it as part of the schema
   // in `build-env.ts`.
-  const res = await fetch(`${Env.BASE_API_URL}/api/users`);
+  const res = await fetch(`${Env.SOME_ENV_URL}/api/users`);
   return res.json();
 }
 ```
+
+#### Removing an env variable
+Remove the env variable from both the env file (e.g. `.env.development`) **and**
+the schema in `build-env.ts`.
+
+#### Activating specific environments
+To choose which environment to load variables from, set the `APP_ENV` env variable
+to either one of: `development` (default if unspecified) | `preview` | `production`.
+`package.json` scripts have been added to help simplify this for you.
+
+```jsonc
+// package.json
+{
+  "scripts": {
+    // These 3 scripts run the `Debug` configuration.
+    // If `APP_ENV` isn't specified, it's `development` by default.
+    "ios": "EXPO_NO_DOTENV=1 expo run:ios",
+    "ios:preview": "APP_ENV=preview pnpm ios",
+    "ios:prod": "APP_ENV=production pnpm ios",
+
+    // These 3 scripts run the `Release` configuration.
+    "ios:release": "EXPO_NO_DOTENV=1 expo run:ios --configuration Release",
+    "ios:preview:release": "APP_ENV=preview pnpm ios:release",
+    "ios:prod:release": "APP_ENV=production pnpm ios:release",
+
+    // Similar scripts for Android have also been added for your convenience.
+  },
+}
+```
+
+#### How are `src/env.ts` and `app.config.ts` involved in the process?
+If env variables are successfully parsed according to the defined schema, they
+are consumed in [`app.config.ts`](./app.config.ts) as Expo extra fields. These
+fields are then re-exported by [`src/env.ts`](./src/env.ts) to the rest of the
+app (screens/components).
+
+`src/env.ts` acts only as the proxy for Expo extra fields to improve the type-safety
+of consuming env variables. This file doesn't need to be modified at all (unless
+you're changing the entire mechanism of defining and consuming env variables).
+
 
 ## License
 Licensed under MIT.
