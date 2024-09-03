@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { ScrollViewProps, ViewStyle } from "react-native";
 import type { Edge } from "react-native-safe-area-context";
@@ -17,8 +17,17 @@ type Props = ScrollViewProps & {
 
   /** Shortcut for including the top edge to apply safe area insets (default: false). */
   withTopInset?: boolean;
+
   /** Shortcut for including the bottom edge to apply safe area insets (default: false). */
   withBottomInset?: boolean;
+
+  /**
+   * Shortcut for excluding top padding (default: false).
+   *
+   * NOTE: if true, `padding-top` will be 0 and ignore both default and
+   * user-defined padding.
+   */
+  ignoreTopPadding?: boolean;
 };
 
 /**
@@ -30,7 +39,10 @@ export function Screen({
   edges: _edges = ["left", "right"],
   withTopInset = false,
   withBottomInset = false,
+  ignoreTopPadding = false,
+  scrollEnabled = true,
   contentContainerStyle,
+  style,
   ...props
 }: Props) {
   const edges = useMemo(() => {
@@ -49,21 +61,35 @@ export function Screen({
 
   const paddingStyle = useMemo(() => {
     return typeof padding === "number"
-      ? { padding }
+      ? { padding, paddingTop: ignoreTopPadding ? 0 : padding }
       : {
           paddingTop: padding?.top,
           paddingBottom: padding?.bottom,
           left: padding?.left,
           right: padding?.right,
         };
-  }, [padding]);
+  }, [padding, ignoreTopPadding]);
+
+  const Container = useMemo(
+    () => (scrollEnabled ? ScrollView : View),
+    [scrollEnabled],
+  );
 
   return (
     <SafeAreaView edges={edges} style={tw`flex-1`}>
-      <ScrollView
+      <Container
         {...props}
+        style={
+          scrollEnabled
+            ? tw.style("flex-1", style as ViewStyle)
+            : tw.style(
+                "flex-1 bg-background dark:bg-background-dark",
+                paddingStyle,
+                style as ViewStyle,
+              )
+        }
         contentContainerStyle={tw.style(
-          "flex-1 bg-background dark:bg-background-dark",
+          "flex-grow bg-background dark:bg-background-dark",
           paddingStyle,
           contentContainerStyle as ViewStyle,
         )}
