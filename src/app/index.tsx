@@ -8,7 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ApiProvider } from "@/services/api";
 import { useNavigationTheme } from "@/theme/navigation";
 import { ThemeProvider } from "@/theme/provider";
-import { AppTabNav } from "./layout";
+import { RootTabNav } from "./navigation";
 
 export function App() {
   return (
@@ -31,7 +31,7 @@ function RootNav() {
 
   return (
     <NavigationContainer ref={navigationRef} theme={navTheme}>
-      <AppTabNav />
+      <RootTabNav />
     </NavigationContainer>
   );
 }
