@@ -5,8 +5,12 @@
     "@tsconfig/strictest/tsconfig"
   ],
   "compilerOptions": {
+    "module": "ESNext",
+    "verbatimModuleSyntax": true,
     "exactOptionalPropertyTypes": false,
     "useUnknownInCatchVariables": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "paths": {
       "@/*": ["./src/*"]
     }

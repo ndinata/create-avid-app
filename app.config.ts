@@ -1,7 +1,7 @@
 // This is to allow importing other TS files.
 import "@swc-node/register";
 
-import { ConfigContext, ExpoConfig } from "expo/config";
+import type { ConfigContext, ExpoConfig } from "expo/config";
 
 import { Env } from "./build-env";
 

@@ -1,7 +1,9 @@
-import { cva } from "class-variance-authority";
-import { TouchableOpacity } from "react-native";
-import type { VariantProps } from "class-variance-authority";
-import type { TouchableOpacityProps, ViewStyle } from "react-native";
+import { cva, type VariantProps } from "class-variance-authority";
+import {
+  TouchableOpacity,
+  type TouchableOpacityProps,
+  type ViewStyle,
+} from "react-native";
 
 import { Text } from "@/components/text";
 import { tw } from "@/theme";

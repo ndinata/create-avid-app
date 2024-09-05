@@ -1,6 +1,10 @@
-import { createContext, useContext, useMemo } from "react";
+import {
+  createContext,
+  useContext,
+  useMemo,
+  type PropsWithChildren,
+} from "react";
 import { create, useAppColorScheme, useDeviceContext } from "twrnc";
-import type { PropsWithChildren } from "react";
 
 import type { ColourScheme } from "./types";
 
