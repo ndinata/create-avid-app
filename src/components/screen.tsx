@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import type { ScrollViewProps, ViewStyle } from "react-native";
 import type { Edge } from "react-native-safe-area-context";
 
-import { tw } from "@/ui/theme";
+import { tw } from "@/theme";
 
 type Props = ScrollViewProps & {
   /** Padding to apply (default: 24). */

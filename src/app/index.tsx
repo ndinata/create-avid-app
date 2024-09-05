@@ -6,8 +6,8 @@ import {
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { ApiProvider } from "@/services/api";
-import { useNavigationTheme } from "@/ui/theme/navigation";
-import { ThemeProvider } from "@/ui/theme/provider";
+import { useNavigationTheme } from "@/theme/navigation";
+import { ThemeProvider } from "@/theme/provider";
 import { AppTabNav } from "./layout";
 
 export function App() {

@@ -1,6 +1,6 @@
-import { Screen } from "@/ui/components/screen";
-import { Text } from "@/ui/components/text";
-import { useTheme } from "@/ui/theme";
+import { Screen } from "@/components/screen";
+import { Text } from "@/components/text";
+import { useTheme } from "@/theme";
 
 export function ProfileScreen() {
   const { tw } = useTheme();

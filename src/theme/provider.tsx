@@ -4,7 +4,7 @@ import type { PropsWithChildren } from "react";
 
 import type { ColourScheme } from "./types";
 
-const TAILWIND_CONFIG_FILEPATH = "../../../tailwind.config.js";
+const TAILWIND_CONFIG_FILEPATH = "../../tailwind.config.js";
 
 /** The tailwind object to use utility classes. */
 export const tw = create(require(TAILWIND_CONFIG_FILEPATH));

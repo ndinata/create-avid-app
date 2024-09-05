@@ -1,7 +1,7 @@
 import { Text as RNText } from "react-native";
 import type { TextProps, TextStyle } from "react-native";
 
-import { tw } from "@/ui/theme";
+import { tw } from "@/theme";
 
 export function Text({ style, ...props }: TextProps) {
   return (

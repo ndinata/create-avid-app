@@ -1,9 +1,9 @@
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-import { Button } from "@/ui/components/button";
-import { Screen } from "@/ui/components/screen";
-import { Text } from "@/ui/components/text";
-import { useTheme } from "@/ui/theme";
+import { Button } from "@/components/button";
+import { Screen } from "@/components/screen";
+import { Text } from "@/components/text";
+import { useTheme } from "@/theme";
 
 type Props = NativeStackScreenProps<any, any>;
 

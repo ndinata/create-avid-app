@@ -3,8 +3,8 @@ import { TouchableOpacity } from "react-native";
 import type { VariantProps } from "class-variance-authority";
 import type { TouchableOpacityProps, ViewStyle } from "react-native";
 
-import { Text } from "@/ui/components/text";
-import { tw } from "@/ui/theme";
+import { Text } from "@/components/text";
+import { tw } from "@/theme";
 
 const buttonVariants = cva("flex-row items-center justify-center rounded-md", {
   variants: {
