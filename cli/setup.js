@@ -69,6 +69,7 @@ async function updateConfig(projectName) {
       }),
     );
     projectPackageJson.name = projectName.toLowerCase();
+    projectPackageJson.version = "0.0.1";
 
     await writeFile(
       projectPackageJsonPath,
