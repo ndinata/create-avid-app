@@ -1,6 +1,6 @@
 # create-avid-app
 
-> Yet another template for Expo (React Native) projects!
+> Yet another starter template for Expo (React Native) projects!
 
 
 ## Usage
@@ -19,12 +19,12 @@ $ pnpm create avid-app@latest <your_project_name>
 ## Configuration
 These packages are included out of the box:
 - ESLint, Prettier, TypeScript
-- [`react-navigation`](https://reactnavigation.org) (this template doesn't use `expo-router`)
+- [`react-navigation v6`](https://reactnavigation.org) (this template doesn't use `expo-router`)
 - [`react-native-svg`](https://github.com/kristerkari/react-native-svg-transformer)
 - [`react-query`](https://tanstack.com/query/latest/docs/framework/react/installation) (basic setup)
 - [`husky`](https://github.com/typicode/husky) (runs a check on [`pre-push`](./.husky/pre-push) by default)
-- [`twrnc`](https://github.com/jaredh159/tailwind-react-native-classnames) and
-    [`tabler-icons`](https://tabler.io/icons) (read more on styling [below](#styling))
+- [`tabler-icons`](https://tabler.io/icons) and [`twrnc`](https://github.com/jaredh159/tailwind-react-native-classnames)
+    (read more on styling [below](#styling))
 - [`zod`](https://zod.dev) for validating `.env` schema (read more on env management [below](#env-management))
 
 ### Styling
@@ -35,7 +35,7 @@ This template uses [`twrnc`]((https://github.com/jaredh159/tailwind-react-native
 Instead of creating stylesheets, you style components inline like this:
 ```tsx
 import { Text, View } from "react-native";
-import { tw } from "@/ui/theme";
+import { tw } from "@/theme";
 
 function Card({ disabled }: { disabled: boolean }) {
   return (
@@ -86,7 +86,7 @@ still **assume that they're accessible by your users!**).
 
 ```sh
 # .env.development
-SOME_ENV_URL="https://yoursite.com"
+YOUR_BASE_URL="https://yoursite.com"
 ```
 
 2. Add the key name to the `zod` schema in [`build-env.ts`](./build-env.ts).
@@ -94,7 +94,7 @@ SOME_ENV_URL="https://yoursite.com"
 ```ts
 // build-env.ts
 const ENV_SCHEMA = z.object({
-  SOME_ENV_URL: z.string(),
+  YOUR_BASE_URL: z.string(),
 
   // your other keys...
 });
@@ -111,9 +111,9 @@ defined schema.
 import { Env } from "@/env";
 
 async function getUsers(): Promise<User> {
-  // `SOME_ENV_URL` will be typechecked if you define it as part of the schema
+  // `YOUR_BASE_URL` will be typechecked if you define it as part of the schema
   // in `build-env.ts`.
-  const res = await fetch(`${Env.SOME_ENV_URL}/api/users`);
+  const res = await fetch(`${Env.YOUR_BASE_URL}/api/users`);
   return res.json();
 }
 ```
@@ -124,8 +124,8 @@ the schema in `build-env.ts`.
 
 #### Activating specific environments
 To choose which environment to load variables from, set the `APP_ENV` env variable
-to either one of: `development` (default if unspecified) | `preview` | `production`.
-`package.json` scripts have been added to help simplify this for you.
+to either one of: `development (default if unspecified) | preview | production`.
+`pnpm` scripts have been added to help simplify this.
 
 ```jsonc
 // package.json
@@ -142,7 +142,7 @@ to either one of: `development` (default if unspecified) | `preview` | `producti
     "ios:preview:release": "APP_ENV=preview pnpm ios:release",
     "ios:prod:release": "APP_ENV=production pnpm ios:release",
 
-    // Similar scripts for Android have also been added for your convenience.
+    // Similar scripts for Android have also been added.
   },
 }
 ```
